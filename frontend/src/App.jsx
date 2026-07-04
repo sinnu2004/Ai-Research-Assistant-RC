@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { researchCompany } from "./services/api";
 import { Download } from "lucide-react";
+import ResearchChart from "./components/ResearchChart";
 import { generatePDF } from "./utils/pdfGenerator";
 
 function App() {
@@ -162,6 +163,7 @@ function App() {
                 </div>
 
               </div>
+            <ResearchChart result={result} />
             <div className="flex justify-end">
               <button
                 onClick={() => generatePDF(result)}
