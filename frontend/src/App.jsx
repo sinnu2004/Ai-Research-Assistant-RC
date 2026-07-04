@@ -16,21 +16,30 @@ function App() {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
 
   const handleResearch = async () => {
-    if (!query.trim()) return;
+  if (!query.trim()) return;
 
-    try {
-      setLoading(true);
-      const data = await researchCompany(query);
-      setResult(data);
-    } catch (error) {
-      console.error(error);
-      alert("Research failed");
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    setLoading(true);
+
+    setError("");
+    setResult(null);
+
+    const data = await researchCompany(query);
+
+    setResult(data);
+  } catch (err) {
+    console.error(err);
+
+    setError(
+      "Failed to generate research report. Please try again."
+    );
+  } finally {
+    setLoading(false);
+  }
+};
 
   
 
@@ -50,8 +59,9 @@ function App() {
           </h1>
 
           <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
-            Research companies instantly using AI. Generate summaries,
-            products, business pain points, and competitor insights in seconds.
+            Generate professional company intelligence reports,
+            competitive analysis, product insights, and business
+            opportunities in seconds using AI-powered research automation.
           </p>
         </div>
       </div>
@@ -91,12 +101,36 @@ function App() {
           </button>
         </div>
 
+        {error && (
+          <div className="mt-6 bg-red-500/10 border border-red-500/30 text-red-400 p-4 rounded-xl">
+            {error}
+          </div>
+        )}
+
         {/* Loading */}
         {loading && (
           <div className="mt-8 bg-zinc-900 border border-zinc-800 rounded-xl p-6 animate-pulse">
-            <p className="text-blue-400 font-medium">
-              AI is researching {query}...
-            </p>
+            <div className="space-y-3">
+              <p className="text-blue-400 font-medium">
+                Researching {query}
+              </p>
+
+              <p className="text-zinc-400 text-sm">
+                Gathering company information...
+              </p>
+
+              <p className="text-zinc-400 text-sm">
+                Identifying products and services...
+              </p>
+
+              <p className="text-zinc-400 text-sm">
+                Analyzing competitors...
+              </p>
+
+              <p className="text-zinc-400 text-sm">
+                Generating AI insights...
+              </p>
+            </div>
           </div>
         )}
 
@@ -260,6 +294,11 @@ function App() {
           </div>
         )}
       </div>
+          <footer className="border-t border-zinc-800 mt-20">
+        <div className="max-w-6xl mx-auto px-6 py-6 text-center text-zinc-500">
+          Built using React, FastAPI, Gemini AI and Vercel
+        </div>
+      </footer>
     </div>
   );
 }
