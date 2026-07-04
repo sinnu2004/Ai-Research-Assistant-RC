@@ -1,6 +1,7 @@
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
+from google.api_core.exceptions import ResourceExhausted
 import json
 
 load_dotenv()
@@ -44,5 +45,6 @@ def analyze_company(company_data):
     response = model.generate_content(prompt)
 
     clean_text = response.text.strip()
+    
     
     return json.loads(clean_text)
