@@ -6,6 +6,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { CartesianGrid } from "recharts";
 
 function ResearchChart({ result }) {
   const chartData = [
@@ -31,12 +32,29 @@ function ResearchChart({ result }) {
 
       <div className="h-80">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={chartData}>
-            <XAxis dataKey="category" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="count" />
-          </BarChart>
+            <BarChart data={chartData}>
+                <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="#27272a"
+                />
+
+                <XAxis
+                dataKey="category"
+                stroke="#a1a1aa"
+                />
+
+                <YAxis
+                stroke="#a1a1aa"
+                />
+
+                <Tooltip />
+
+                <Bar
+                dataKey="count"
+                fill="#3b82f6"
+                radius={[8, 8, 0, 0]}
+                />
+            </BarChart>
         </ResponsiveContainer>
       </div>
     </div>
