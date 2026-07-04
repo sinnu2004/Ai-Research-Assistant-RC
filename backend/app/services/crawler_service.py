@@ -1,4 +1,5 @@
 import requests
+from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
 COMMON_PAGES = [
@@ -6,29 +7,46 @@ COMMON_PAGES = [
     "/about-us",
     "/products",
     "/services",
-    "/solutions",
-    "/contact",
-    "/contact-us",
-    "/pricing"
+    "/solutions"
 ]
 
 def crawl_website(base_url):
-    discovered_pages = []
+
+    scraped_content = []
 
     for page in COMMON_PAGES:
+
         url = urljoin(base_url, page)
 
         try:
             response = requests.get(
                 url,
                 timeout=5,
-                headers={"User-Agent": "Mozilla/5.0"}
+                headers={
+                    "User-Agent": "Mozilla/5.0"
+                }
             )
 
             if response.status_code == 200:
-                discovered_pages.append(url)
+
+                soup = BeautifulSoup(
+                    response.text,
+                    "html.parser"
+                )
+
+                text = soup.get_text(
+                    separator=" ",
+                    strip=True
+                )
+
+                scraped_content.append(
+                    {
+                        "url": url,
+                        "content": text[:3000]
+                    }
+                )
 
         except Exception as e:
             print(e)
 
-    return discovered_pages
+    return scraped_content

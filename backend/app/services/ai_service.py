@@ -28,9 +28,18 @@ def analyze_company(company_data):
     "top_5_competitors": []
     }}
 
-    Company:
-    {company_data}
-    """
+    Company Information:
+        {company_data}
+
+        Use both company information and scraped website
+        content to generate insights.
+
+        Focus on:
+        1. Company summary
+        2. Products and services
+        3. Business pain points
+        4. Top competitors
+        """
 
     response = model.generate_content(prompt)
 

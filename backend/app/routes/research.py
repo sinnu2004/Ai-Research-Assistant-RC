@@ -17,6 +17,15 @@ def research_company(request: ResearchRequest):
 
     company = get_company_info(request.query)
 
+    scraped_pages = []
+
+    if company.get("website"):
+        scraped_pages = crawl_website(
+            company["website"]
+        )
+
+    company["scraped_pages"] = scraped_pages
+
     ai_analysis = analyze_company(company)
 
     company["ai_analysis"] = ai_analysis
